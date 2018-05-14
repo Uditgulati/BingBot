@@ -16,6 +16,6 @@ The chatbot is implemented in TensorFlow based on the seq2seq model, with certai
 
 [Udit Gulati](https://github.com/Uditgulati), [Saloni Laddha](https://github.com/saloni-laddha).
 
-## Contribution
+## Contributing
 
 Any sort of contribution is welcome. Feel free to open a pull request.
