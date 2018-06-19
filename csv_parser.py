@@ -1,6 +1,5 @@
 import csv
 from datetime import datetime
-import sqlite3
 
 
 
@@ -19,15 +18,11 @@ def main():
 	filename = 'sarc'
 	path = 'CSV/0.0/'
 
-	sql_tansaction = []
-	connection = sqlite3.connect('{}{}.db'.format(path, filename))
-	c = connection.cursor()
-
-	c.execute("""CREATE TABLE IF NOT EXISTS parent_reply 
-		(comment_id TEXT PRIMARY KEY, comment TEXT, parent TEXT, subreddit TEXT,
-		score INT)""")
-
-	with open(path + filename + '.csv', 'r') as file:
+	with open(path + filename + '.csv', 'r') as file,\
+	open(path + 'test.from', 'a', encoding='utf8') as test_from,\
+	open(path + 'test.to', 'a', encoding='utf8') as test_to,\
+	open(path + 'train.from', 'a', encoding='utf8') as train_from,\
+	open(path + 'train.to', 'a', encoding='utf8') as train_to:
 		row_count = 0
 		for line in file:
 			values = [x for x in line.strip().split('	')]
@@ -41,30 +36,17 @@ def main():
 			comment_id = str(row_count)
 			parent = values[9]
 
-			comment = comment.replace('"', "'")
-			parent = parent.replace('"', "'")
-
-			if score <= 0 or acceptable(comment) == False:
+			if score <= 1 or acceptable(comment) == False:
 				continue
 
 			try:
-				sql = """INSERT into parent_reply (comment_id, comment, parent, 
-					subreddit, score) 
-					VALUES ("{}","{}","{}","{}",{});"""\
-					.format(comment_id, comment, parent, subreddit, score)
-				sql_tansaction.append(sql)
+				if row_count < 5000:
+					test_from.write(parent+'\n')
+					test_to.write(comment+'\n')
+				train_from.write(parent+'\n')
+				train_to.write(comment+'\n')
 			except Exception as e:
-				print('{' + comment + '} insert failed with exception ' + str(e))
-
-			if len(sql_tansaction) > 10000:
-				c.execute('BEGIN TRANSACTION')
-				for insert in sql_tansaction:
-					try:
-						c.execute(insert)
-					except Exception as e:
-						print(str(e))
-				connection.commit()
-				sql_tansaction = []
+				print('{' + comment + '} write failed with exception ' + str(e))
 
 			if row_count % 100000 == 0:
 				print("Total row: {}, Time: {}".format(row_count, str(datetime.now())))
