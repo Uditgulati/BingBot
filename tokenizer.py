@@ -1,5 +1,3 @@
-import csv
-from datetime import datetime
 from nltk.tokenize.moses import MosesTokenizer, MosesDetokenizer
 
 
@@ -34,17 +32,17 @@ if __name__ == '__main__':
 
 			new_line = ' '.join(str(x) for x in tokens)
 
-			if (row_count1 % 100) == 0:
+			if row_count1 % 10000 == 0:
 				print('original: ' + line)
 				print('tokenized: ' + new_line)
 				print(row_count1)
 
 			if (row_count1 % 100) < 70:
-				train_from.write(new_line)
+				train_from.write(new_line + '\n')
 			elif (row_count1 % 100) < 85:
-				test1_from.write(new_line)
+				test1_from.write(new_line + '\n')
 			else:
-				test2_from.write(new_line)
+				test2_from.write(new_line + '\n')
 
 			row_count1 += 1
 
@@ -56,17 +54,17 @@ if __name__ == '__main__':
 
 			new_line = ' '.join(str(x) for x in tokens)
 
-			if (row_count1 % 100) == 0:
+			if row_count1 % 10000 == 0:
 				print('original: ' + line)
 				print('tokenized: ' + new_line)
 				print(row_count1)
 
 			if (row_count1 % 100) < 70:
-				train_from.write(new_line)
+				train_from.write(new_line + '\n')
 			elif (row_count1 % 100) < 85:
-				test1_from.write(new_line)
+				test1_from.write(new_line + '\n')
 			else:
-				test2_from.write(new_line)
+				test2_from.write(new_line + '\n')
 
 			row_count1 += 1
 
@@ -78,17 +76,17 @@ if __name__ == '__main__':
 
 			new_line = ' '.join(str(x) for x in tokens)
 
-			if (row_count2 % 100) == 0:
+			if row_count2 % 10000 == 0:
 				print('original: ' + line)
 				print('tokenized: ' + new_line)
 				print(row_count2)
 
 			if (row_count2 % 100) < 70:
-				train_to.write(new_line)
+				train_to.write(new_line + '\n')
 			elif (row_count2 % 100) < 85:
-				test1_to.write(new_line)
+				test1_to.write(new_line + '\n')
 			else:
-				test2_to.write(new_line)
+				test2_to.write(new_line + '\n')
 
 			row_count2 += 1
 
@@ -100,41 +98,44 @@ if __name__ == '__main__':
 
 			new_line = ' '.join(str(x) for x in tokens)
 
-			if (row_count2 % 100) == 0:
+			if row_count2 % 10000 == 0:
 				print('original: ' + line)
 				print('tokenized: ' + new_line)
 				print(row_count2)
 
 			if (row_count2 % 100) < 70:
-				train_to.write(new_line)
+				train_to.write(new_line + '\n')
 			elif (row_count2 % 100) < 85:
-				test1_to.write(new_line)
+				test1_to.write(new_line + '\n')
 			else:
-				test2_to.write(new_line)
+				test2_to.write(new_line + '\n')
 
 			row_count2 += 1
 
-		vocab_1.write('<unk>')
-		vocab_1.write('<s>')
-		vocab_1.write('</s>')
+		vocab_1.write('<unk>' + '\n')
+		vocab_1.write('<s>' + '\n')
+		vocab_1.write('</s>' + '\n')
 
-		vocab_2.write('<unk>')
-		vocab_2.write('<s>')
-		vocab_2.write('</s>')
+		vocab_2.write('<unk>' + '\n')
+		vocab_2.write('<s>' + '\n')
+		vocab_2.write('</s>' + '\n')
 
 		count1 = 0
 		count2 = 0
-		limit = 100000
+		limit = 150000
 
 		for word in sorted(vocab1.items(), key=lambda x:x[1], reverse=True):
-			vocab_1.write(word[0])
+			vocab_1.write(word[0] + '\n')
 			count1 += 1
 			if count1 >= limit:
 				break
 
 		for word in sorted(vocab2.items(), key=lambda x:x[1], reverse=True):
-			vocab_2.write(word[0])
+			vocab_2.write(word[0] + '\n')
 			count2 += 1
 			if count2 >= limit:
 				break
 
+		print()
+		print('r1 ' + str(row_count1))
+		print('r2 ' + str(row_count2))
