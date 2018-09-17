@@ -2,7 +2,7 @@
 
 A chatbot that talks sarcastically. It is trained with reddit comments.
 
-The chatbot is implemented in TensorFlow based on the seq2seq model, with certain rules integrated.
+The chatbot is implemented in TensorFlow based on the seq2seq model, with certain rules integrated. The project makes use of the [nmt tutorial](https://github.com/tensorflow/nmt/) by Tensorflow.
 
 ## Sample chat
 
@@ -11,10 +11,6 @@ The chatbot is implemented in TensorFlow based on the seq2seq model, with certai
 ## Installation and Setup
 
 <--installation guide goes here-->
-
-## Authors
-
-[Udit Gulati](https://github.com/Uditgulati), [Saloni Laddha](https://github.com/saloni-laddha).
 
 ## Contributing
 
