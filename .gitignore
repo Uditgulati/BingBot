@@ -102,4 +102,3 @@ ENV/
 *.db
 *.csv
 CSV/
-filter*
